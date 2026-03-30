@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; user-select:none; }
+html, body { width:380px; height:90px; background:transparent; overflow:hidden; font-family:-apple-system,"SF Pro Display",sans-serif; }
+.banner {
+  margin:8px 12px; height:64px;
+  background:rgba(24,24,26,0.94);
+  border-radius:12px;
+  border:none;
+  display:flex; align-items:center; padding:0 14px; gap:12px;
+  transform:translateY(-90px); opacity:0;
+  transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+}
+.banner.show { transform:translateY(0); opacity:1; }
+.texts { flex:1; }
+.title { font-size:13px; font-weight:600; color:rgba(255,255,255,0.92); letter-spacing:-0.1px; }
+.sub { font-size:11px; color:rgba(255,255,255,0.4); margin-top:2px; }
+.close { width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,0.1); border:none; cursor:pointer; color:rgba(255,255,255,0.45); font-size:11px; display:flex; align-items:center; justify-content:center; }
+.close:hover { background:rgba(255,255,255,0.18); }
+</style>
+</head>
+<body>
+<div class="banner" id="banner">
+  <img src="../assets/icon-3.png" width="46" height="46" style="flex-shrink:0;object-fit:contain;">
+  <div class="texts">
+    <div class="title">거북이 경고! 어깨를 펴세요</div>
+    <div class="sub">자세를 바르게 유지하세요</div>
+  </div>
+  <button class="close" onclick="dismiss()">✕</button>
+</div>
+<script>
+let t;
+function dismiss() {
+  document.getElementById('banner').classList.remove('show');
+  clearTimeout(t);
+  setTimeout(() => window.electronAPI && window.electronAPI.hideBanner(), 500);
+}
+setTimeout(() => {
+  document.getElementById('banner').classList.add('show');
+  t = setTimeout(dismiss, 6000);
+}, 50);
+</script>
+</body>
+</html>
